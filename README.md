@@ -1,4 +1,4 @@
-# v2
+# Front-end programme of Lineup-system
 
 ## Project setup
 ```
