@@ -1,0 +1,95 @@
+{
+  "f1": [
+  {
+    "classcode": "1A",
+    "location": "202"
+  },
+  {
+    "classcode": "1B",
+    "location": "203"
+  },
+  {
+    "classcode": "1C",
+    "location": "204"
+  },
+  {
+    "classcode": "1D",
+    "location": "205"
+  }],
+  "f2": [
+  {
+    "classcode": "2A",
+    "location": "401"
+  },
+  {
+    "classcode": "2B",
+    "location": "402"
+  },
+  {
+    "classcode": "2C",
+    "location": "403"
+  },
+  {
+    "classcode": "2D",
+    "location": "404"
+  }],
+  "f3": [
+  {
+    "classcode": "3A",
+    "location": "301"
+  },
+  {
+    "classcode": "3B",
+    "location": "302"
+  },
+  {
+    "classcode": "3C",
+    "location": "303"
+  },
+  {
+    "classcode": "3D",
+    "location": "304"
+  }],
+  "f4": [
+  {
+    "classcode": "4A",
+    "location": "101"
+  },
+  {
+    "classcode": "4B",
+    "location": "102"
+  },
+  {
+    "classcode": "4C",
+    "location": "103"
+  },
+  {
+    "classcode": "4D",
+    "location": "AD1"
+  },
+  {
+    "classcode": "4E",
+    "location": "AD2"
+  }],
+  "f5": [
+  {
+    "classcode": "5A",
+    "location": "206"
+  },
+  {
+    "classcode": "5B",
+    "location": "405"
+  },
+  {
+    "classcode": "5C",
+    "location": "406"
+  },
+  {
+    "classcode": "5D",
+    "location": "305"
+  },
+  {
+    "classcode": "5E",
+    "location": "306"
+  }]
+}
