@@ -1,60 +1,41 @@
 <template>
-  <div>
-    <div id="interview-room" class="container">
-      <h1>接見室 <span class="badge badge-info">{{currentClazz}}</span></h1>
-      <instruction />
-      <p class="lead">
-        建議：正當接見一位家長時，門外最多安排兩位家長等候。
-      </p>
-      <div>
-        <hr>
-        <div>
-          <h2 v-show='ReadyList.length !== 0'>已安排接見</h2>
-          <span>
-            <student v-for="(p, key) in ReadyList" :key='key' :classcode='currentClazz' :schedule='p' />
-          </span>
-        </div>
-        <hr v-show='WaitingList.length !== 0'>
-        <div>
-          <h2 v-show='WaitingList.length !== 0'>已到等候室</h2>
-          <span>
-            <student v-for="(p, key) in WaitingList" :key='key' :classcode='currentClazz' :schedule='p' />
-          </span>
-        </div>
-      </div>
-      <hr v-show='CompletedList.length !== 0'>
-      <div>
-        <h2 v-show='CompletedList.length !== 0'>完成接見</h2>
-        <span>
-          <student v-for="(p, key) in CompletedList" :key='key' :classcode='currentClazz' :schedule='p' />
-        </span>
-      </div>
-    </div>
+  <div id="interview-room" class="container mt-3">
+    <h1>接見室 <span class="badge badge-info">{{currentClazz}}</span></h1>
+    <instruction />
+    <p class="lead">
+      建議：正當接見一位家長時，門外最多安排兩位家長等候。
+    </p>
+    <list name='已安排接見' :list='ReadyList'/>
+    <list name='已到等候室' :list='WaitingList'/>
+    <list name='完成接見' :list='CompletedList'/>
   </div>
 </template>
 
 <script>
-import {mapState, mapGetters, mapActions} from 'vuex'
-import Student from './Student.vue'
-import Instruction from './Instruction.vue'
+import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+import List from './InterviewRoom/List.vue'
+import Instruction from './Common/Instruction.vue'
 import _ from 'lodash'
 
 export default {
-  mounted () {
-    const {updateInterviewRoomSchedules, refreshTime} = this
-    setInterval(updateInterviewRoomSchedules, refreshTime)
+  created () {
+    const option = {'leading': true, 'trailing': false}
+    this.updateInterviewRoomSchedules = _.throttle(
+      this.updateInterviewRoomSchedules, 2000, option
+    )
   },
   watch: {
-    // trigger update schedules when jwtToken is ready
-    jwtToken () {
-      this.updateInterviewRoomSchedules()
+    // trigger update schedules when jwt is ready
+    jwt () {
+      const {clearAndPushIntervals, updateInterviewRoomSchedules} = this
+      clearAndPushIntervals(updateInterviewRoomSchedules)
     }
   },
   components: {
-    Student, Instruction
+    List, Instruction
   },
   computed: {
-    ...mapState(['schedules', 'currentClazz', 'currentForm', 'refreshTime', 'jwtToken']),
+    ...mapState(['schedules', 'currentClazz', 'currentForm', 'jwt']),
     ...mapGetters(['floorClazzes']),
     ReadyList () {
       return _(this.schedules)
@@ -76,14 +57,15 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['clearAndPushIntervals']),
     ...mapActions(['updateSchedules']),
-    updateInterviewRoomSchedules: _.throttle(function () {
+    updateInterviewRoomSchedules () {
       const {updateSchedules, currentClazz} = this
       let classcodes = [currentClazz]
       updateSchedules({
         classcodes
       })
-    }, 2000, {'leading': true, 'trailing': false})
+    }
   }
 }
 </script>

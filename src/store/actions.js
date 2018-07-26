@@ -16,37 +16,37 @@ export default {
   updatePriority ({state}, {classcode, classno, priority}) {
     fetch(`./api/schedule/${classcode}/${classno}/priority/${priority}`, {
       method: 'PUT',
-      headers: { jwt: state.jwtToken }
+      headers: { jwt: state.jwt }
     }).then(response => response.text()).then(console.log).catch(console.error)
   },
   toggleIsComplete  ({state}, {classcode, classno}) {
     fetch(`./api/schedule/${classcode}/${classno}/is-complete`, {
       method: 'PUT',
-      headers: { jwt: state.jwtToken }
+      headers: { jwt: state.jwt }
     }).then(response => response.text()).then(console.log).catch(console.error)
   },
   toggleIsNotified  ({state}, {classcode, classno}) {
     fetch(`./api/schedule/${classcode}/${classno}/is-notified`, {
       method: 'PUT',
-      headers: { jwt: state.jwtToken }
+      headers: { jwt: state.jwt }
     }).then(response => response.text()).then(console.log).catch(console.error)
   },
   toggleIsMeeting  ({state}, {classcode, classno}) {
     fetch(`./api/schedule/${classcode}/${classno}/is-meeting`, {
       method: 'PUT',
-      headers: { jwt: state.jwtToken }
+      headers: { jwt: state.jwt }
     }).then(response => response.text()).then(console.log).catch(console.error)
   },
   addSchedule ({state, commit}, {classcode, classno}) {
     fetch(`./api/schedule/${classcode}/${classno}`, {
       method: 'POST',
-      headers: { jwt: state.jwtToken }
+      headers: { jwt: state.jwt }
     }).then(response => response.text()).then(console.log).catch(console.error)
   },
   removeSchedule ({state, commit}, {classcode, classno}) {
     fetch(`./api/schedule/${classcode}/${classno}`, {
       method: 'DELETE',
-      headers: { jwt: state.jwtToken }
+      headers: { jwt: state.jwt }
     })
       .then(response => response.text())
       .then(console.log)
@@ -64,11 +64,14 @@ export default {
       })
     }
     fetch(`./api/schedules${query}`, {
-      headers: { jwt: state.jwtToken }
+      headers: { jwt: state.jwt }
     })
       .then(response => response.json())
       .then(json => {
-        commit('updateSchedules', json || [])
+        commit('updateSchedules', json)
+      })
+      .then(() => {
+        console.log(`update ${classcodes.join(', ')} schedules`)
       })
       .catch(console.error)
   }

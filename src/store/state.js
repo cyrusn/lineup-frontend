@@ -1,8 +1,9 @@
 export default {
-  jwtToken: '',
+  jwt: '',
   currentRoute: '/login',
-  currentFloor: '3/F',
-  currentClazz: '5D',
+  currentFloor: '',
+  currentClazz: '',
   schedules: [],
-  refreshTime: 5000
+  refreshInterval: 5000,
+  intervals: []
 }

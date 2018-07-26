@@ -40,7 +40,7 @@
 
 <script>
 import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
-import FloorSelector from './FloorSelector.vue'
+import FloorSelector from './Common/FloorSelector.vue'
 
 const routers = [
   {
@@ -61,14 +61,14 @@ export default {
   data () {
     return {
       routers,
-      page: '/interview-room',
-      clazz: '5D',
-      userAlias: 'user1',
-      password: 'password1'
+      page: '',
+      clazz: '',
+      userAlias: '',
+      password: ''
     }
   },
   computed: {
-    ...mapState(['jwtToken', 'currentFloor']),
+    ...mapState(['currentFloor']),
     ...mapGetters(['floorClazzes'])
   },
   methods: {

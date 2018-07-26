@@ -15,7 +15,7 @@ export default {
   data () {
     return {
       floors,
-      floor: '3/F'
+      floor: ''
     }
   },
   computed: {
