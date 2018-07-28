@@ -23,13 +23,8 @@ export default {
     this.updateInterviewRoomSchedules = _.throttle(
       this.updateInterviewRoomSchedules, 2000, option
     )
-  },
-  watch: {
-    // trigger update schedules when jwt is ready
-    jwt () {
-      const {clearAndPushIntervals, updateInterviewRoomSchedules} = this
-      clearAndPushIntervals(updateInterviewRoomSchedules)
-    }
+    const {clearAndPushIntervals, updateInterviewRoomSchedules} = this
+    clearAndPushIntervals(updateInterviewRoomSchedules)
   },
   components: {
     List, Instruction

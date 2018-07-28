@@ -1,6 +1,9 @@
 import _ from 'lodash'
 
 export default {
+  updateRole (state, role) {
+    state.role = role
+  },
   clearAndPushIntervals (state, fn) {
     // all intervals will store in intervals, clear all intervals
     // when update the classcode
@@ -11,6 +14,10 @@ export default {
     fn()
     const interval = setInterval(fn, state.refreshInterval)
     state.intervals.push(interval)
+  },
+  updateErrorMessage (state, err) {
+    state.errorMessage = err
+    console.error(err)
   },
   updateJWT (state, token) {
     state.jwt = token

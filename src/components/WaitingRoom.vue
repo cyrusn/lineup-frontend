@@ -31,20 +31,15 @@ export default {
     this.updateWaitingRoomSchedules = _.throttle(
       this.updateWaitingRoomSchedules, 2000, option
     )
-  },
-  watch: {
-    // trigger update schedules when jwt is ready
-    jwt () {
-      const {clearAndPushIntervals, updateWaitingRoomSchedules} = this
-      clearAndPushIntervals(updateWaitingRoomSchedules)
-    }
+    const {clearAndPushIntervals, updateWaitingRoomSchedules} = this
+    clearAndPushIntervals(updateWaitingRoomSchedules)
   },
   computed: {
     ...mapState(['schedules', 'currentFloor', 'jwt', 'throttleOption']),
     ...mapGetters(['floorClazzes']),
     groupedSchedules () {
       return _.groupBy(this.schedules, 'classcode')
-    },
+    }
   },
   methods: {
     ...mapMutations(['clearAndPushIntervals']),

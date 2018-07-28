@@ -4,7 +4,10 @@
       <div class="w-50 mx-auto">
         <h1 class="display-4 text-center">家長日接見系統</h1>
         <hr>
-        <form>
+        <div v-if="errorMessage" class="alert alert-danger">
+          {{errorMessage}}
+        </div>
+        <form @keypress.enter='onLogin'>
           <div class="form-group">
             <select class="form-control" v-model='page'>
               <option value='' disabled>選擇工作</option>
@@ -30,9 +33,6 @@
           </div>
           <button type="button" class="btn btn-primary" @click="onLogin">遞交</button>
         </form>
-        <code>
-          {{jwtToken}}
-        </code>
       </div>
     </div>
   </div>
@@ -68,20 +68,35 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentFloor']),
+    ...mapState(['currentFloor', 'jwt', 'errorMessage']),
     ...mapGetters(['floorClazzes'])
   },
+  watch: {
+    jwt () {
+      const {goto, page, updateErrorMessage, getRoleInJWT} = this
+      const role = getRoleInJWT()
+
+      if (role === 'student' && page === '/interview-room') {
+        updateErrorMessage('Forbidden access for student user')
+        return
+      }
+
+      goto(page)
+    }
+  },
   methods: {
-    ...mapMutations(['goto', 'updateClazz']),
+    ...mapMutations(['goto', 'updateClazz', 'updateErrorMessage']),
     ...mapActions(['login']),
     onLogin () {
-      const {page, userAlias, password, login, goto} = this
+      const {page, userAlias, password, login} = this
       if (page !== '') {
         login({
           userAlias, password
         })
-        goto(page)
       }
+    },
+    getRoleInJWT () {
+      return JSON.parse(atob(this.jwt.split('.')[1])).Role
     }
   }
 }

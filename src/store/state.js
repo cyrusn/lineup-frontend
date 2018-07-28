@@ -5,5 +5,7 @@ export default {
   currentClazz: '',
   schedules: [],
   refreshInterval: 5000,
-  intervals: []
+  intervals: [],
+  errorMessage: '',
+  role: ''
 }
