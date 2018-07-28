@@ -45,6 +45,8 @@ export default {
 
       if (isMeeting) {
         classObject['btn-danger'] = true
+        classObject['btn-outline-success'] = false
+        classObject['check'] = false
         return classObject
       }
 
