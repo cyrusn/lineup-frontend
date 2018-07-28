@@ -25,41 +25,46 @@ export default {
       const {schedule, currentRoute} = this
       const {isNotified, isComplete, isMeeting, priority} = schedule
 
-      const classObject = {}
-
-      if (currentRoute === '/waiting-room') {
-        classObject['btn-lg'] = true
+      const defaultClassObject = {
+        'btn-primary': false,
+        'btn-outline-success': false,
+        'btn-danger': false,
+        'btn-warning': false,
+        'check': false
       }
 
-      if (isNotified) {
-        classObject['check'] = true
-        classObject['btn-outline-success'] = true
+      if (currentRoute === '/waiting-room') {
+        defaultClassObject['btn-lg'] = true
+      }
+
+      if (priority > 0) {
+        return Object.assign({}, defaultClassObject, {
+          'btn-success': true
+        })
+      }
+
+      if (isNotified && priority > 0) {
+        return Object.assign({}, defaultClassObject, {
+          'check': true,
+          'btn-outline-success': true
+        })
       }
 
       if (isComplete) {
-        classObject['btn-outline-success'] = false
-        classObject['check'] = false
-        classObject['btn-primary'] = true
-        return classObject
+        return Object.assign({}, defaultClassObject, {
+          'btn-primary': true
+        })
       }
 
       if (isMeeting) {
-        classObject['btn-danger'] = true
-        return classObject
+        return Object.assign({}, defaultClassObject, {
+          'btn-danger': true
+        })
       }
 
-      if (priority > 0) {
-        classObject['btn-success'] = true
-        return classObject
-      }
-
-      if (priority > 0) {
-        classObject['btn-success'] = true
-        return classObject
-      }
-
-      classObject['btn-warning'] = true
-      return classObject
+      return Object.assign({}, defaultClassObject, {
+        'btn-warning': true
+      })
     }
   }
 }
