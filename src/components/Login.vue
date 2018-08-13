@@ -18,7 +18,7 @@
           <div class='form-group'
             v-if="page === '/interview-room' && currentFloor !== ''">
             <select class="form-control" v-model='clazz' @change='updateClazz(clazz)'>
-              <option disabled="" value="">選擇班別</option>
+              <option disabled value="">選擇班別</option>
               <option
                 v-for='c in floorClazzes' :key='c.id'
                 :value="c.classcode">{{c.classcode}}

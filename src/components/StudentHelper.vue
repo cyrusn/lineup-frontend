@@ -39,7 +39,7 @@ export default {
     Controller, Instruction
   },
   watch: {
-    // trigger update schedules when jwtToken is ready
+    // trigger update schedules when student helper selected classcode
     classcode () {
       const {clearAndPushIntervals, updateStudentHelperSchedules} = this
       clearAndPushIntervals(updateStudentHelperSchedules)
