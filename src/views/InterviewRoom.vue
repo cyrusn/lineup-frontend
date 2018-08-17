@@ -13,8 +13,8 @@
 
 <script>
 import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
-import List from './InterviewRoom/List.vue'
-import Instruction from './Common/Instruction.vue'
+import List from '@/components/InterviewRoom/List.vue'
+import Instruction from '@/components/Common/Instruction.vue'
 import _ from 'lodash'
 
 export default {

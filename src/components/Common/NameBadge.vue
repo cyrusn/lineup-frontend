@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import students from '../../data/student.json'
+import students from '@/data/student.json'
 import _ from 'lodash'
 import {mapState} from 'vuex'
 

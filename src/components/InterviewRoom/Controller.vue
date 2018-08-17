@@ -22,7 +22,7 @@
 
 <script>
 import {mapActions, mapState, mapMutations} from 'vuex'
-import NameBadge from '../Common/NameBadge'
+import NameBadge from '@/components/Common/NameBadge'
 import _ from 'lodash'
 
 export default {

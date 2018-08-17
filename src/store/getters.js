@@ -1,4 +1,4 @@
-import Floors from '../data/floor.json'
+import Floors from '@/data/floor.json'
 
 export default {
   floorClazzes: state => {

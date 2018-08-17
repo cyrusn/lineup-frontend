@@ -40,7 +40,7 @@
 
 <script>
 import {mapState, mapGetters, mapActions, mapMutations} from 'vuex'
-import FloorSelector from './Common/FloorSelector.vue'
+import FloorSelector from '@/components/Common/FloorSelector.vue'
 
 const routers = [
   {

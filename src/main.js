@@ -1,12 +1,12 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import Login from './components/Login'
-import InterviewRoom from './components/InterviewRoom'
-import WaitingRoom from './components/WaitingRoom'
-import StudentHelper from './components/StudentHelper'
+import Login from '@/views/Login'
+import InterviewRoom from '@/views/InterviewRoom'
+import WaitingRoom from '@/views/WaitingRoom'
+import StudentHelper from '@/views/StudentHelper'
 
-import store from './store'
+import store from '@/store'
 import {version} from '../package.json'
 
 console.log(`running version ${version}`)

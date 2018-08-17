@@ -27,8 +27,8 @@
 
 <script>
 import {mapState, mapMutations, mapActions} from 'vuex'
-import students from '../../data/student.json'
-import NameBadge from '../Common/NameBadge'
+import students from '@/data/student.json'
+import NameBadge from '@/components/Common/NameBadge'
 import _ from 'lodash'
 
 export default {

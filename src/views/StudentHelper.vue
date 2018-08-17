@@ -19,8 +19,8 @@
 
 <script>
 import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
-import Instruction from './Common/Instruction.vue'
-import Controller from './StudentHelper/Controller.vue'
+import Instruction from '@/components/Common/Instruction.vue'
+import Controller from '@/components/StudentHelper/Controller.vue'
 import _ from 'lodash'
 
 export default {

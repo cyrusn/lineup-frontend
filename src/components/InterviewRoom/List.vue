@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Controller from './Controller.vue'
+import Controller from '@/components/InterviewRoom/Controller.vue'
 
 export default {
   props: {
