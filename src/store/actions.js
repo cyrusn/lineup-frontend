@@ -19,7 +19,7 @@ function logStatusOnDevelopment (res) {
     case 'production':
       return
     case 'development':
-      res.text().then(console.log)
+      return res.text().then(console.log)
   }
 }
 
@@ -105,6 +105,7 @@ export default {
       .then(checkError)
       .then(res => res.json())
       .then(json => {
+        if (json == null) return
         commit('updateSchedules', json)
         if (process.env.NODE_ENV === 'development') {
           console.log(`updated ${classcodes.join(', ')} schedule`)
