@@ -4,7 +4,7 @@ export default {
   currentFloor: '',
   currentClazz: '',
   schedules: [],
-  refreshInterval: 5000,
+  refreshInterval: 4000,
   intervals: [],
   errorMessage: '',
   role: ''
