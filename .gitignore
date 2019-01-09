@@ -23,3 +23,4 @@ yarn-error.log*
 
 # remove data
 /src/data/*.json
+package-lock.json
