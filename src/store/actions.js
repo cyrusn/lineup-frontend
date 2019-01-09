@@ -105,7 +105,10 @@ export default {
       .then(checkError)
       .then(res => res.json())
       .then(json => {
-        if (json == null) return
+        if (json == null) {
+          commit('updateSchedules', [])
+          return
+        }
         commit('updateSchedules', json)
         if (process.env.NODE_ENV === 'development') {
           console.log(`updated ${classcodes.join(', ')} schedule`)
