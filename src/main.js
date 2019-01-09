@@ -7,7 +7,7 @@ import WaitingRoom from '@/views/WaitingRoom'
 import StudentHelper from '@/views/StudentHelper'
 
 import store from '@/store'
-import {version} from '../package.json'
+import { version } from '../package.json'
 
 console.log(`running version ${version}`)
 Vue.filter('uppercase', str => str.toUpperCase())
