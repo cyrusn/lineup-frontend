@@ -46,7 +46,7 @@ export default {
     ...mapActions(['updateSchedules']),
     filteredSchedules (classcode) {
       return _(this.groupedSchedules[classcode])
-        .orderBy(['isMeeting', 'isNotified', 'priority'], ['desc', 'desc'])
+        .orderBy(['isMeeting', 'isNotified', 'priority'], ['desc', 'desc', 'desc'])
         .value()
     },
     updateWaitingRoomSchedules () {
