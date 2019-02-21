@@ -1,33 +1,37 @@
 <template>
   <div id="interview-room" class="container mt-3">
-    <h1>接見室 <span class="badge badge-info">{{currentClazz}}</span></h1>
-    <instruction />
-    <p class="lead">
-      建議：正當接見一位家長時，門外最多安排兩位家長等候。
-    </p>
-    <list name='已安排接見' :list='ReadyList'/>
-    <list name='已到等候室' :list='WaitingList'/>
-    <list name='完成接見' :list='CompletedList'/>
+    <h1>
+      接見室
+      <span class="badge badge-info">{{currentClazz}}</span>
+    </h1>
+    <instruction/>
+    <p class="lead">建議：正當接見一位家長時，門外最多安排兩位家長等候。</p>
+    <list name="已安排接見" :list="ReadyList"/>
+    <list name="已到等候室" :list="WaitingList"/>
+    <list name="完成接見" :list="CompletedList"/>
   </div>
 </template>
 
 <script>
-import {mapState, mapGetters, mapMutations, mapActions} from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import List from '@/components/InterviewRoom/List.vue'
 import Instruction from '@/components/Common/Instruction.vue'
 import _ from 'lodash'
 
 export default {
   created () {
-    const option = {'leading': true, 'trailing': false}
+    const option = { leading: true, trailing: false }
     this.updateInterviewRoomSchedules = _.throttle(
-      this.updateInterviewRoomSchedules, 2000, option
+      this.updateInterviewRoomSchedules,
+      2000,
+      option
     )
-    const {clearAndPushIntervals, updateInterviewRoomSchedules} = this
+    const { clearAndPushIntervals, updateInterviewRoomSchedules } = this
     clearAndPushIntervals(updateInterviewRoomSchedules)
   },
   components: {
-    List, Instruction
+    List,
+    Instruction
   },
   computed: {
     ...mapState(['schedules', 'currentClazz', 'currentForm', 'jwt']),
@@ -35,19 +39,22 @@ export default {
     ReadyList () {
       return _(this.schedules)
         .filter(p => !p.isComplete && p.priority > 0)
-        .orderBy(['isMeeting', 'priority', 'arrivalAt'], ['desc', 'desc', 'asc'])
+        .orderBy(
+          ['isMeeting', 'priority', 'arrivedAt'],
+          ['desc', 'desc', 'asc']
+        )
         .value()
     },
     WaitingList () {
       return _(this.schedules)
         .filter(p => !p.isComplete && p.priority <= 0)
-        .orderBy(['priority'], ['desc'])
+        .orderBy(['arrivedAt'], ['asc'])
         .value()
     },
     CompletedList () {
       return _(this.schedules)
         .filter('isComplete')
-        .orderBy(['arrivalAt'])
+        .orderBy(['arrivedAt'])
         .value()
     }
   },
@@ -55,7 +62,7 @@ export default {
     ...mapMutations(['clearAndPushIntervals']),
     ...mapActions(['updateSchedules']),
     updateInterviewRoomSchedules () {
-      const {updateSchedules, currentClazz} = this
+      const { updateSchedules, currentClazz } = this
       let classcodes = [currentClazz]
       updateSchedules({
         classcodes
