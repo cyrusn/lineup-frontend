@@ -4,7 +4,7 @@ import Vue from 'vue'
 import Login from '@/views/Login'
 import Interview from '@/views/Interview'
 import WaitingRoom from '@/views/WaitingRoom'
-import Attendance from '@/view/Attendance'
+import Attendance from '@/views/Attendance'
 
 import store from '@/store'
 import { version } from '../package.json'
