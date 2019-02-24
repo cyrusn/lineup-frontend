@@ -8,7 +8,7 @@
     <p class="lead">建議：正當接見一位家長時，門外最多安排兩位家長等候。</p>
     <list name="已安排接見" :list="ReadyList"/>
     <list name="已到等候室" :list="WaitingList"/>
-    <list name="完成接見" :list="CompletedList"/>
+    <list name="已完成接見" :list="CompletedList"/>
   </div>
 </template>
 

@@ -2,9 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Login from '@/views/Login'
-import InterviewRoom from '@/views/InterviewRoom'
+import Interview from '@/views/Interview'
 import WaitingRoom from '@/views/WaitingRoom'
-import StudentHelper from '@/views/StudentHelper'
+import Attendance from '@/view/Attendance'
 
 import store from '@/store'
 import { version } from '../package.json'
@@ -14,8 +14,8 @@ Vue.filter('uppercase', str => str.toUpperCase())
 
 const routes = {
   '/login': Login,
-  '/student-helper': StudentHelper,
-  '/interview-room': InterviewRoom,
+  '/attendance': Attendance,
+  '/interview': Interview,
   '/waiting-room': WaitingRoom
 }
 

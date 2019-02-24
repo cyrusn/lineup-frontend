@@ -7,28 +7,28 @@
 <script>
 import students from '@/data/student.json'
 import _ from 'lodash'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   props: ['schedule'],
   computed: {
     ...mapState(['currentRoute']),
     getStudent () {
-      const {schedule} = this
-      const {classcode, classno} = schedule
-      const result = _.find(students, {classcode, classno})
+      const { schedule } = this
+      const { classcode, classno } = schedule
+      const result = _.find(students, { classcode, classno })
       return Object.assign({}, schedule, result)
     },
     btnClass () {
-      const {schedule, currentRoute} = this
-      const {isNotified, isComplete, isMeeting, priority} = schedule
+      const { schedule, currentRoute } = this
+      const { isNotified, isComplete, isMeeting, priority } = schedule
 
       const defaultClassObject = {
         'btn-primary': false,
         'btn-outline-success': false,
         'btn-danger': false,
         'btn-warning': false,
-        'check': false
+        check: false
       }
 
       if (currentRoute === '/waiting-room') {
@@ -38,23 +38,23 @@ export default {
       let buttonClass
 
       switch (true) {
-        case (isComplete):
+        case isComplete:
           buttonClass = Object.assign({}, defaultClassObject, {
             'btn-primary': true
           })
           break
-        case (isMeeting):
+        case isMeeting:
           buttonClass = Object.assign({}, defaultClassObject, {
             'btn-danger': true
           })
           break
-        case (isNotified && priority > 0):
+        case isNotified && priority > 0:
           buttonClass = Object.assign({}, defaultClassObject, {
-            'check': true,
+            check: true,
             'btn-outline-success': true
           })
           break
-        case (priority > 0):
+        case priority > 0:
           buttonClass = Object.assign({}, defaultClassObject, {
             'btn-success': true
           })
@@ -70,7 +70,7 @@ export default {
 }
 </script>
 <style lang="css">
-  .check::after {
-    content: " ✓";
-  }
+.check::after {
+  content: " ✓";
+}
 </style>

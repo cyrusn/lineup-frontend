@@ -40,7 +40,7 @@ export default {
       state.schedules.push(schedule)
     }
   },
-  fakeRemoveSchudule (state, schedule) {
+  fakeRemoveSchedule (state, schedule) {
     const filtered = _.reject(state.schedules, schedule)
     state.schedules = [...filtered]
   },

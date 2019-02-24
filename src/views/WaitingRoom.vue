@@ -23,13 +23,13 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from "vuex"
-import NameBadge from "@/components/Common/NameBadge"
-import _ from "lodash"
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import NameBadge from '@/components/Common/NameBadge'
+import _ from 'lodash'
 
 export default {
   components: { NameBadge },
-  created() {
+  created () {
     const option = { leading: true, trailing: false }
     this.updateWaitingRoomSchedules = _.throttle(
       this.updateWaitingRoomSchedules,
@@ -40,31 +40,31 @@ export default {
     clearAndPushIntervals(updateWaitingRoomSchedules)
   },
   computed: {
-    ...mapState(["schedules", "currentFloor", "jwt", "throttleOption"]),
-    ...mapGetters(["floorClazzes"]),
-    groupedSchedules() {
-      return _.groupBy(this.schedules, "classcode")
+    ...mapState(['schedules', 'currentFloor', 'jwt', 'throttleOption']),
+    ...mapGetters(['floorClazzes']),
+    groupedSchedules () {
+      return _.groupBy(this.schedules, 'classcode')
     }
   },
   methods: {
-    ...mapMutations(["clearAndPushIntervals"]),
-    ...mapActions(["updateSchedules"]),
-    filteredSchedules(classcode) {
+    ...mapMutations(['clearAndPushIntervals']),
+    ...mapActions(['updateSchedules']),
+    filteredSchedules (classcode) {
       return _(this.groupedSchedules[classcode])
         .orderBy(
-          ["isMeeting", "priority", "arrivedAt", "isNotified"],
-          ["desc", "desc", "asc", "desc"]
+          ['isMeeting', 'priority', 'arrivedAt', 'isNotified'],
+          ['desc', 'desc', 'asc', 'desc']
         )
         .value()
     },
-    updateWaitingRoomSchedules() {
+    updateWaitingRoomSchedules () {
       const { floorClazzes, updateSchedules } = this
       let classcodes = floorClazzes.map(s => s.classcode)
       updateSchedules({
         classcodes,
         filter: {
-          is_complete: "=0",
-          priority: ">0"
+          is_complete: '=0',
+          priority: '>0'
         }
       })
     }
