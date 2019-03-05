@@ -24,7 +24,7 @@ function logStatusOnDevelopment (res) {
 }
 
 export default {
-  login ({ commit }, payload) {
+  login ({ commit }, { payload, callback }) {
     fetch(`./api/auth/login`, {
       method: 'POST',
       body: JSON.stringify(payload)
@@ -32,6 +32,7 @@ export default {
       .then(checkError)
       .then(res => res.text())
       .then(text => commit('updateJWT', text))
+      .then(callback)
       .catch(handleCatchError(commit))
   },
   updatePriority ({ state, commit }, { classcode, classno, priority }) {
@@ -107,9 +108,9 @@ export default {
       .then(json => {
         if (json == null) {
           commit('updateSchedules', [])
-          return
+        } else {
+          commit('updateSchedules', json)
         }
-        commit('updateSchedules', json)
         if (process.env.NODE_ENV === 'development') {
           console.log(`updated ${classcodes.join(', ')} schedule`)
         }

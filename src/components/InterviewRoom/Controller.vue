@@ -9,10 +9,18 @@
       </button>
     </div>
     <div class="btn-group mr-1">
-      <button v-if="!isComplete" class="btn btn-outline-success" @click="onAddPriority">+1</button>
-      <button v-if="!isComplete" class="btn btn-outline-secondary" @click="onMinusPriority">-1</button>
-      <button class="btn btn-outline-primary" @click="onToggleIsComplete">完成</button>
-      <button v-if="!isComplete" class="btn btn-outline-danger" @click="onToggleIsMeeting">接見中</button>
+      <button v-if="!isComplete" class="btn btn-outline-success" @click="onAddPriority">
+        <font-awesome-icon icon="bell"/>
+      </button>
+      <button v-if="!isComplete" class="btn btn-outline-secondary" @click="onMinusPriority">
+        <font-awesome-icon icon="bell-slash"/>
+      </button>
+      <button class="btn btn-outline-primary" @click="onToggleIsComplete">
+        <font-awesome-icon icon="check-circle"/>
+      </button>
+      <button v-if="!isComplete" class="btn btn-outline-danger" @click="onToggleIsMeeting">
+        <font-awesome-icon icon="comment-dots"/>
+      </button>
     </div>
     <div class="btn-group">
       <name-badge :schedule="schedule"/>
@@ -21,7 +29,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import NameBadge from '@/components/Common/NameBadge'
 import _ from 'lodash'
 
@@ -44,7 +52,6 @@ export default {
     fnNames.map(fnName => _.throttle(vm[fnName], 1000, option))
   },
   computed: {
-    ...mapState(['currentRoute']),
     isComplete () {
       return this.schedule.isComplete
     }
@@ -54,9 +61,15 @@ export default {
       'fakeAddPriority',
       'fakeMinusPriority',
       'fakeIsComplete',
-      'fakeIsMeeting'
+      'fakeIsMeeting',
+      'fakeIsNotified'
     ]),
-    ...mapActions(['updatePriority', 'toggleIsComplete', 'toggleIsMeeting']),
+    ...mapActions([
+      'updatePriority',
+      'toggleIsComplete',
+      'toggleIsMeeting',
+      'toggleIsNotified'
+    ]),
     onAddPriority () {
       const { schedule, fakeAddPriority } = this
 
@@ -73,16 +86,37 @@ export default {
       }
     },
     onMinusPriority () {
-      const { schedule, fakeMinusPriority } = this
-      let { classcode, classno, priority, isComplete, isMeeting } = schedule
+      const {
+        schedule,
+        fakeMinusPriority,
+        updatePriority,
+        fakeIsNotified,
+        toggleIsNotified
+      } = this
+
+      let {
+        classcode,
+        classno,
+        priority,
+        isComplete,
+        isMeeting,
+        isNotified
+      } = schedule
+
       if (priority > 0 && !isComplete && !isMeeting) {
         fakeMinusPriority(schedule)
         priority = priority - 1
-        this.updatePriority({
+
+        updatePriority({
           classcode,
           classno,
-          priority
+          priority,
+          isNotified
         })
+      }
+      if (priority === 0 && isNotified === true) {
+        fakeIsNotified({ classcode, classno })
+        toggleIsNotified({ classcode, classno })
       }
     },
     onToggleIsComplete () {

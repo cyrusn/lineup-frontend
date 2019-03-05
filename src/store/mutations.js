@@ -22,15 +22,6 @@ export default {
   updateJWT (state, token) {
     state.jwt = token
   },
-  goto (state, route) {
-    state.currentRoute = route
-  },
-  updateFloor (state, val) {
-    state.currentFloor = val
-  },
-  updateClazz (state, val) {
-    state.currentClazz = val
-  },
   updateSchedules (state, schedules) {
     // state.schedules = Object.assign({}, state.schedules, json)
     state.schedules = schedules

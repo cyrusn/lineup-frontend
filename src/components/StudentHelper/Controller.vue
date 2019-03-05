@@ -3,9 +3,15 @@
     <div v-for="s in filteredStudents" :key="s.id" class="col-lg-4 col-6">
       <div class="btn-toolbar mb-2">
         <div class="btn-group mr-1">
-          <button type="button" class="btn btn-outline-warning" @click="onAddSchedule(s)">+</button>
-          <button type="button" class="btn btn-outline-secondary" @click="onRemoveSchedule(s)">-</button>
-          <button type="button" class="btn btn-outline-success" @click="onToggleIsNotified(s)">✓‍</button>
+          <button type="button" class="btn btn-outline-warning" @click="onAddSchedule(s)">
+            <font-awesome-icon icon="user-plus"/>
+          </button>
+          <button type="button" class="btn btn-outline-secondary" @click="onRemoveSchedule(s)">
+            <font-awesome-icon icon="user-minus"/>
+          </button>
+          <button type="button" class="btn btn-outline-success" @click="onToggleIsNotified(s)">
+            <font-awesome-icon icon="bell"/>
+          </button>
         </div>
         <div class="btn-group">
           <div v-if="getSchedule(s)">
@@ -38,7 +44,7 @@ export default {
     NameBadge
   },
   computed: {
-    ...mapState(['currentForm', 'schedules']),
+    ...mapState(['schedules']),
     filteredStudents () {
       const { classcode } = this
       return _.filter(students, { classcode })

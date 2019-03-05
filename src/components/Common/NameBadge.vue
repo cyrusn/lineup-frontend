@@ -1,37 +1,35 @@
 <template lang="html">
   <button type='button' :class='btnClass' class='btn'>
-    {{getStudent.cname}} ({{getStudent.classno}})
+    {{student.cname}} ({{student.classno}})
+    <font-awesome-icon :icon="['far', 'bell']" v-if='student.isNotified'/>
   </button>
 </template>
 
 <script>
 import students from '@/data/student.json'
 import _ from 'lodash'
-import { mapState } from 'vuex'
 
 export default {
   props: ['schedule'],
   computed: {
-    ...mapState(['currentRoute']),
-    getStudent () {
+    student () {
       const { schedule } = this
       const { classcode, classno } = schedule
       const result = _.find(students, { classcode, classno })
       return Object.assign({}, schedule, result)
     },
     btnClass () {
-      const { schedule, currentRoute } = this
+      const { schedule } = this
       const { isNotified, isComplete, isMeeting, priority } = schedule
 
       const defaultClassObject = {
         'btn-primary': false,
         'btn-outline-success': false,
         'btn-danger': false,
-        'btn-warning': false,
-        check: false
+        'btn-warning': false
       }
 
-      if (currentRoute === '/waiting-room') {
+      if (this.$route.name === 'waiting room') {
         defaultClassObject['btn-lg'] = true
       }
 
@@ -50,7 +48,6 @@ export default {
           break
         case isNotified && priority > 0:
           buttonClass = Object.assign({}, defaultClassObject, {
-            check: true,
             'btn-outline-success': true
           })
           break
@@ -69,8 +66,3 @@ export default {
   }
 }
 </script>
-<style lang="css">
-.check::after {
-  content: " ✓";
-}
-</style>

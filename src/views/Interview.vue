@@ -2,40 +2,29 @@
   <div id="interview-room" class="container mt-3">
     <h1>
       接見室
-      <span class="badge badge-info">{{currentClazz}}</span>
+      <span class="badge badge-info">{{$route.params.classcode}}</span>
     </h1>
     <instruction/>
     <p class="lead">建議：正當接見一位家長時，門外最多安排兩位家長等候。</p>
-    <list name="已安排接見" :list="ReadyList"/>
-    <list name="已到等候室" :list="WaitingList"/>
-    <list name="已完成接見" :list="CompletedList"/>
+    <list name="已安排接見名單" :list="ReadyList"/>
+    <list name="已到等候室名單" :list="WaitingList"/>
+    <list name="完成接見名單" :list="CompletedList"/>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import List from '@/components/InterviewRoom/List.vue'
 import Instruction from '@/components/Common/Instruction.vue'
 import _ from 'lodash'
 
 export default {
-  created () {
-    const option = { leading: true, trailing: false }
-    this.updateInterviewRoomSchedules = _.throttle(
-      this.updateInterviewRoomSchedules,
-      2000,
-      option
-    )
-    const { clearAndPushIntervals, updateInterviewRoomSchedules } = this
-    clearAndPushIntervals(updateInterviewRoomSchedules)
-  },
   components: {
     List,
     Instruction
   },
   computed: {
-    ...mapState(['schedules', 'currentClazz', 'currentForm', 'jwt']),
-    ...mapGetters(['floorClazzes']),
+    ...mapState(['schedules']),
     ReadyList () {
       return _(this.schedules)
         .filter(p => !p.isComplete && p.priority > 0)
@@ -56,17 +45,6 @@ export default {
         .filter('isComplete')
         .orderBy(['arrivedAt'])
         .value()
-    }
-  },
-  methods: {
-    ...mapMutations(['clearAndPushIntervals']),
-    ...mapActions(['updateSchedules']),
-    updateInterviewRoomSchedules () {
-      const { updateSchedules, currentClazz } = this
-      let classcodes = [currentClazz]
-      updateSchedules({
-        classcodes
-      })
     }
   }
 }
