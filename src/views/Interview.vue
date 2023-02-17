@@ -5,7 +5,7 @@
       <span class="badge badge-info">{{$route.params.classcode}}</span>
     </h1>
     <instruction/>
-    <p class="lead">建議：正當接見一位家長時，門外最多安排兩位家長等候。</p>
+    <p class="lead">建議：正當接見一位家長時，門外最多安排一位家長等候。</p>
     <list name="已安排接見名單" :list="ReadyList"/>
     <list name="已到等候室名單" :list="WaitingList"/>
     <list name="完成接見名單" :list="CompletedList"/>
