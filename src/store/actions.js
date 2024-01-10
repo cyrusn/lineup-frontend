@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-function checkError (res) {
+function checkError(res) {
   if (!res.ok) {
     throw res
   } else {
@@ -8,13 +8,13 @@ function checkError (res) {
   }
 }
 
-function handleCatchError (commit) {
-  return res => {
-    res.json().then(json => commit('updateErrorMessage', JSON.stringify(json)))
+function handleCatchError(commit) {
+  return (res) => {
+    res.json().then((json) => commit('updateErrorMessage', JSON.stringify(json)))
   }
 }
 
-function logStatusOnDevelopment (res) {
+function logStatusOnDevelopment(res) {
   switch (process.env.NODE_ENV) {
     case 'production':
       return
@@ -24,18 +24,36 @@ function logStatusOnDevelopment (res) {
 }
 
 export default {
-  login ({ commit }, { payload, callback }) {
+  login({ commit }, { payload, callback }) {
     fetch(`./api/auth/login`, {
       method: 'POST',
       body: JSON.stringify(payload)
     })
       .then(checkError)
-      .then(res => res.text())
-      .then(text => commit('updateJWT', text))
+      .then((res) => res.text())
+      .then((text) => commit('updateJWT', text))
       .then(callback)
       .catch(handleCatchError(commit))
   },
-  updatePriority ({ state, commit }, { classcode, classno, priority }) {
+  fetchWaitingRooms({ commit }) {
+    fetch(`./data/waitingRoom.json`)
+      .then(checkError)
+      .then((res) => res.json())
+      .then((json) => {
+        commit('updateWaitingRooms', json)
+      })
+      .catch(handleCatchError(commit))
+  },
+  fetchStudents({ commit }) {
+    fetch(`./data/student.json`)
+      .then(checkError)
+      .then((res) => res.json())
+      .then((json) => {
+        commit('updateStudents', json)
+      })
+      .catch(handleCatchError(commit))
+  },
+  updatePriority({ state, commit }, { classcode, classno, priority }) {
     fetch(`./api/schedule/${classcode}/${classno}/priority/${priority}`, {
       method: 'PUT',
       headers: { jwt: state.jwt }
@@ -44,7 +62,7 @@ export default {
       .then(logStatusOnDevelopment)
       .catch(handleCatchError(commit))
   },
-  toggleIsComplete ({ state, commit }, { classcode, classno }) {
+  toggleIsComplete({ state, commit }, { classcode, classno }) {
     fetch(`./api/schedule/${classcode}/${classno}/is-complete`, {
       method: 'PUT',
       headers: { jwt: state.jwt }
@@ -53,7 +71,7 @@ export default {
       .then(logStatusOnDevelopment)
       .catch(handleCatchError(commit))
   },
-  toggleIsNotified ({ state, commit }, { classcode, classno }) {
+  toggleIsNotified({ state, commit }, { classcode, classno }) {
     fetch(`./api/schedule/${classcode}/${classno}/is-notified`, {
       method: 'PUT',
       headers: { jwt: state.jwt }
@@ -62,7 +80,7 @@ export default {
       .then(logStatusOnDevelopment)
       .catch(handleCatchError(commit))
   },
-  toggleIsMeeting ({ state, commit }, { classcode, classno }) {
+  toggleIsMeeting({ state, commit }, { classcode, classno }) {
     fetch(`./api/schedule/${classcode}/${classno}/is-meeting`, {
       method: 'PUT',
       headers: { jwt: state.jwt }
@@ -71,7 +89,7 @@ export default {
       .then(logStatusOnDevelopment)
       .catch(handleCatchError(commit))
   },
-  addSchedule ({ state, commit }, { classcode, classno }) {
+  addSchedule({ state, commit }, { classcode, classno }) {
     fetch(`./api/schedule/${classcode}/${classno}`, {
       method: 'POST',
       headers: { jwt: state.jwt }
@@ -80,7 +98,7 @@ export default {
       .then(logStatusOnDevelopment)
       .catch(handleCatchError(commit))
   },
-  removeSchedule ({ state, commit }, { classcode, classno }) {
+  removeSchedule({ state, commit }, { classcode, classno }) {
     fetch(`./api/schedule/${classcode}/${classno}`, {
       method: 'DELETE',
       headers: { jwt: state.jwt }
@@ -89,7 +107,7 @@ export default {
       .then(logStatusOnDevelopment)
       .catch(handleCatchError(commit))
   },
-  updateSchedules ({ state, commit }, { classcodes, filter }) {
+  updateSchedules({ state, commit }, { classcodes, filter }) {
     // classcodes for query e.g. ?classcode=3A&classcode=4D&classcode=5D
     let query = '?classcode=' + classcodes.join('&classcode=')
 
@@ -104,8 +122,8 @@ export default {
       headers: { jwt: state.jwt }
     })
       .then(checkError)
-      .then(res => res.json())
-      .then(json => {
+      .then((res) => res.json())
+      .then((json) => {
         if (json == null) {
           commit('updateSchedules', [])
         } else {

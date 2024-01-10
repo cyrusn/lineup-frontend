@@ -4,5 +4,7 @@ export default {
   refreshInterval: 4000,
   intervals: [],
   errorMessage: '',
-  role: ''
+  role: '',
+  students: [],
+  waitingRooms: []
 }

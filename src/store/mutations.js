@@ -1,10 +1,10 @@
 import _ from 'lodash'
 
 export default {
-  updateRole (state, role) {
+  updateRole(state, role) {
     state.role = role
   },
-  clearAndPushIntervals (state, fn) {
+  clearAndPushIntervals(state, fn) {
     // all intervals will store in intervals, clear all intervals
     // when update the classcode
     state.intervals.forEach(clearInterval)
@@ -15,56 +15,62 @@ export default {
     const interval = setInterval(fn, state.refreshInterval)
     state.intervals.push(interval)
   },
-  updateErrorMessage (state, err) {
+  updateErrorMessage(state, err) {
     state.errorMessage = err
     console.error(err)
   },
-  updateJWT (state, token) {
+  updateJWT(state, token) {
     state.jwt = token
   },
-  updateSchedules (state, schedules) {
+  updateWaitingRooms(state, waitingRooms) {
+    state.waitingRooms = waitingRooms
+  },
+  updateStudents(state, students) {
+    state.students = students
+  },
+  updateSchedules(state, schedules) {
     // state.schedules = Object.assign({}, state.schedules, json)
     state.schedules = schedules
   },
-  fakeAddSchedule (state, schedule) {
+  fakeAddSchedule(state, schedule) {
     if (!_.find(state.schedules, schedule)) {
       state.schedules.push(schedule)
     }
   },
-  fakeRemoveSchedule (state, schedule) {
+  fakeRemoveSchedule(state, schedule) {
     const filtered = _.reject(state.schedules, schedule)
     state.schedules = [...filtered]
   },
-  fakeAddPriority (state, schedule) {
-    state.schedules.map(s => {
+  fakeAddPriority(state, schedule) {
+    state.schedules.map((s) => {
       if (_.isMatch(s, schedule)) {
         s.priority += 1
       }
     })
   },
-  fakeMinusPriority (state, schedule) {
-    state.schedules.map(s => {
+  fakeMinusPriority(state, schedule) {
+    state.schedules.map((s) => {
       if (_.isMatch(s, schedule)) {
         s.priority -= 1
       }
     })
   },
-  fakeIsNotified (state, schedule) {
-    state.schedules.map(s => {
+  fakeIsNotified(state, schedule) {
+    state.schedules.map((s) => {
       if (_.isMatch(s, schedule)) {
         s.isNotified = !s.isNotified
       }
     })
   },
-  fakeIsComplete (state, schedule) {
-    state.schedules.map(s => {
+  fakeIsComplete(state, schedule) {
+    state.schedules.map((s) => {
       if (_.isMatch(s, schedule)) {
         s.isComplete = !s.isComplete
       }
     })
   },
-  fakeIsMeeting (state, schedule) {
-    state.schedules.map(s => {
+  fakeIsMeeting(state, schedule) {
+    state.schedules.map((s) => {
       if (_.isMatch(s, schedule)) {
         s.isMeeting = !s.isMeeting
       }

@@ -1,0 +1,123 @@
+[
+  {
+    "id": "f1-2f-needlework-room",
+
+    "name": "中一級（二樓縫紉室）",
+    "classcodes": [
+      {
+        "classcode": "1A",
+        "location": "202"
+      },
+      {
+        "classcode": "1B",
+        "location": "203"
+      },
+      {
+        "classcode": "1C",
+        "location": "204"
+      },
+      {
+        "classcode": "1D",
+        "location": "205"
+      }
+    ]
+  },
+  {
+    "id": "f2-4f-physic-lab",
+    "name": "中二級（四樓物理室）",
+
+    "classcodes": [
+      {
+        "classcode": "2A",
+        "location": "401"
+      },
+      {
+        "classcode": "2B",
+        "location": "402"
+      },
+      {
+        "classcode": "2C",
+        "location": "403"
+      },
+      {
+        "classcode": "2D",
+        "location": "404"
+      }
+    ]
+  },
+  {
+    "id": "f3-3f-geography-room",
+    "name": "中三級（三樓地理室）",
+    "classcodes": [
+      {
+        "classcode": "3A",
+        "location": "301"
+      },
+      {
+        "classcode": "3B",
+        "location": "302"
+      },
+      {
+        "classcode": "3C",
+        "location": "303"
+      },
+      {
+        "classcode": "3D",
+        "location": "304"
+      }
+    ]
+  },
+  {
+    "id": "f4-1f-music-room",
+    "name": "中四級（一樓音樂室）",
+    "classcodes": [
+      {
+        "classcode": "4A",
+        "location": "101"
+      },
+      {
+        "classcode": "4B",
+        "location": "102"
+      },
+      {
+        "classcode": "4C",
+        "location": "103"
+      },
+      {
+        "classcode": "4D",
+        "location": "AD1"
+      },
+      {
+        "classcode": "4E",
+        "location": "AD2"
+      }
+    ]
+  },
+  {
+    "id": "f5-3f-library",
+    "name": "中五級（三樓圖書館）",
+    "classcodes": [
+      {
+        "classcode": "5A",
+        "location": "405"
+      },
+      {
+        "classcode": "5B",
+        "location": "207"
+      },
+      {
+        "classcode": "5C",
+        "location": "208"
+      },
+
+      {
+        "classcode": "5D",
+        "location": "305"
+      },
+      {
+        "classcode": "5E",
+        "location": "306"
+      }
+    ]
+  }
+]

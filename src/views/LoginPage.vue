@@ -3,26 +3,26 @@
     <div class="row justify-content-center">
       <div class="col-md-8 col-lg-6 align-self-center">
         <h1 class="display-4 text-center">家長日接見系統</h1>
-        <hr>
-        <div v-if="errorMessage" class="alert alert-danger">{{errorMessage}}</div>
+        <hr />
+        <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
         <form @keypress.enter="onLogin">
-          <div class="form-group">
+          <div class="mb-3">
             <input
               type="text"
               class="form-control"
               id="username"
               placeholder="登入名稱"
               v-model="userAlias"
-            >
+            />
           </div>
-          <div class="form-group">
+          <div class="mb-3">
             <input
               type="password"
               class="form-control"
               id="password"
               placeholder="密碼"
               v-model="password"
-            >
+            />
           </div>
           <button type="button" class="btn btn-primary" @click="onLogin">登入</button>
         </form>
@@ -32,18 +32,18 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from "vuex"
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
-  name: "Login",
+  name: 'LoginPage',
   data() {
     return {
-      userAlias: "",
-      password: ""
+      userAlias: '',
+      password: ''
     }
   },
   computed: {
-    ...mapState(["errorMessage", "jwt"])
+    ...mapState(['errorMessage', 'jwt'])
   },
   watch: {
     jwt() {
@@ -53,8 +53,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["login"]),
-    ...mapMutations(["updateRole"]),
+    ...mapActions(['login']),
+    ...mapMutations(['updateRole']),
     onLogin() {
       const { userAlias, password, login } = this
       login({
@@ -63,12 +63,12 @@ export default {
           password
         },
         callback: () => {
-          this.$router.push("/")
+          this.$router.push('/')
         }
       })
     },
     getRoleInJWT() {
-      return JSON.parse(atob(this.jwt.split(".")[1])).Role
+      return JSON.parse(atob(this.jwt.split('.')[1])).Role
     }
   }
 }

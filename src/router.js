@@ -1,45 +1,44 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
-import Login from '@/views/Login'
-import Navbar from '@/views/Navbar'
-import Interview from '@/views/Interview'
-import WaitingRoom from '@/views/WaitingRoom'
-import Attendance from '@/views/Attendance'
+import LoginPage from '@/views/LoginPage.vue'
+import NavbarMenu from '@/views/NavbarMenu.vue'
+import InterviewRoom from '@/views/InterviewRoom.vue'
+import WaitingRoom from '@/views/WaitingRoom.vue'
+import AttendancePage from '@/views/AttendancePage.vue'
 
-Vue.use(Router)
-
-export default new Router({
+export default createRouter({
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
       name: 'login',
       components: {
-        default: Login,
-        Navbar: Navbar
+        default: LoginPage,
+        Navbar: NavbarMenu
       }
-    }, {
+    },
+    {
       path: '/attendance/:classcode',
       name: 'attendance',
       components: {
-        default: Attendance,
-        Navbar: Navbar
+        default: AttendancePage,
+        Navbar: NavbarMenu
       }
     },
     {
       path: '/interview/:classcode',
       name: 'interview',
       components: {
-        default: Interview,
-        Navbar: Navbar
+        default: InterviewRoom,
+        Navbar: NavbarMenu
       }
     },
     {
-      path: '/waiting-room/:floor',
+      path: '/waiting-room/:room',
       name: 'waiting room',
       components: {
         default: WaitingRoom,
-        Navbar: Navbar
+        Navbar: NavbarMenu
       }
     }
   ]

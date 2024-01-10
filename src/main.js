@@ -1,9 +1,9 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import router from '@/router'
-import App from '@/App.vue'
-import store from '@/store'
+import { createApp } from 'vue'
+import router from './router'
+import App from './App.vue'
+import store from './store'
 import { version } from '../package.json'
 
 import 'bootstrap'
@@ -33,16 +33,14 @@ library.add(
   faCheckCircle
 )
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+const app = createApp(App)
+
+app.component('font-awesome-icon', FontAwesomeIcon)
 
 console.log(`running version ${version}`)
-Vue.filter('uppercase', str => str.toUpperCase())
 
-Vue.config.productionTip = false
+app.config.productionTip = false
 
-/* eslint-disable no-new */
-new Vue({
-  store,
-  router,
-  render: h => h(App)
-}).$mount('#app')
+app.use(store)
+app.use(router)
+app.mount('#app')
