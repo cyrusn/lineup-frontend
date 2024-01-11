@@ -1,7 +1,6 @@
 [
   {
     "id": "f1-2f-needlework-room",
-
     "name": "中一級（二樓縫紉室）",
     "classcodes": [
       {
@@ -23,9 +22,8 @@
     ]
   },
   {
-    "id": "f2-4f-physic-lab",
-    "name": "中二級（四樓物理室）",
-
+    "id": "f2-4f-406",
+    "name": "中二級（四樓406室）",
     "classcodes": [
       {
         "classcode": "2A",
@@ -73,23 +71,23 @@
     "classcodes": [
       {
         "classcode": "4A",
-        "location": "101"
-      },
-      {
-        "classcode": "4B",
-        "location": "102"
-      },
-      {
-        "classcode": "4C",
-        "location": "103"
-      },
-      {
-        "classcode": "4D",
         "location": "AD1"
       },
       {
-        "classcode": "4E",
+        "classcode": "4B",
         "location": "AD2"
+      },
+      {
+        "classcode": "4C",
+        "location": "101"
+      },
+      {
+        "classcode": "4D",
+        "location": "102"
+      },
+      {
+        "classcode": "4E",
+        "location": "103"
       }
     ]
   },
@@ -99,15 +97,15 @@
     "classcodes": [
       {
         "classcode": "5A",
-        "location": "405"
+        "location": "310B"
       },
       {
         "classcode": "5B",
-        "location": "207"
+        "location": "307"
       },
       {
         "classcode": "5C",
-        "location": "208"
+        "location": "308"
       },
 
       {
