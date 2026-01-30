@@ -16,7 +16,9 @@ import {
   faBell,
   faBellSlash,
   faCommentDots,
-  faCheckCircle
+  faCheckCircle,
+  faSun,
+  faMoon
 } from '@fortawesome/free-solid-svg-icons'
 
 import { faBell as faBellRegular } from '@fortawesome/free-regular-svg-icons'
@@ -30,7 +32,9 @@ library.add(
   faBellRegular,
   faBellSlash,
   faCommentDots,
-  faCheckCircle
+  faCheckCircle,
+  faSun,
+  faMoon
 )
 
 const app = createApp(App)

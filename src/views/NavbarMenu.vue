@@ -1,5 +1,11 @@
 <template>
-  <nav class="navbar navbar-light navbar-expand-lg bg-light">
+  <nav
+    :class="[
+      'navbar',
+      'navbar-expand-lg',
+      theme === 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-light'
+    ]"
+  >
     <div class="container-fluid">
       <a class="navbar-brand me-5" href="#">家長接見系統</a>
 
@@ -52,22 +58,37 @@
           </div>
         </form>
 
-        <form class="d-flex ms-auto" v-if="!jwt" @submit.prevent="onLogin">
-          <div class="row row-cols-lg-auto g-3 align-items-center">
-            <div class="col-12">
-              <input type="text" class="form-control" placeholder="登入名稱" v-model="userAlias" />
+        <div class="d-flex align-items-center ms-auto">
+          <button
+            class="btn me-3"
+            :class="theme === 'dark' ? 'btn-outline-light' : 'btn-outline-dark'"
+            @click="onToggleTheme"
+          >
+            <font-awesome-icon :icon="theme === 'dark' ? 'sun' : 'moon'" />
+          </button>
+
+          <form class="d-flex" v-if="!jwt" @submit.prevent="onLogin">
+            <div class="row row-cols-lg-auto g-3 align-items-center">
+              <div class="col-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="登入名稱"
+                  v-model="userAlias"
+                />
+              </div>
+              <div class="col-12">
+                <input type="password" class="form-control" placeholder="密碼" v-model="password" />
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary">登入</button>
+              </div>
             </div>
-            <div class="col-12">
-              <input type="password" class="form-control" placeholder="密碼" v-model="password" />
-            </div>
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary">登入</button>
-            </div>
+          </form>
+          <div class="navbar-text" v-else>
+            <span class="badge bg-secondary me-2" v-if="role">{{ role }}</span>
+            <span>聖公會李炳中學</span>
           </div>
-        </form>
-        <div class="navbar-text ms-auto" v-else>
-          <span class="badge bg-secondary me-2" v-if="role">{{ role }}</span>
-          <span>聖公會李炳中學</span>
         </div>
       </div>
     </div>
@@ -85,13 +106,20 @@ export default {
       classcode: '',
       room: '',
       userAlias: '',
-      password: ''
+      password: '',
+      theme: 'dark'
     }
   },
   created() {
     const { fetchStudents, fetchWaitingRooms } = this
     fetchStudents()
     fetchWaitingRooms()
+
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+      this.theme = savedTheme
+    }
+    this.applyTheme()
   },
   watch: {
     jwt() {
@@ -157,6 +185,14 @@ export default {
   methods: {
     ...mapMutations(['clearAndPushIntervals', 'updateRole']),
     ...mapActions(['updateSchedules', 'fetchStudents', 'fetchWaitingRooms', 'login']),
+    onToggleTheme() {
+      this.theme = this.theme === 'dark' ? 'light' : 'dark'
+      localStorage.setItem('theme', this.theme)
+      this.applyTheme()
+    },
+    applyTheme() {
+      document.documentElement.setAttribute('data-bs-theme', this.theme)
+    },
     onLogin() {
       const { userAlias, password, login } = this
       login({
