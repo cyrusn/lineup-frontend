@@ -35,14 +35,20 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import NameBadge from '@/components/Common/NameBadge.vue'
 import _ from 'lodash'
 
 export default {
   components: { NameBadge },
+  created() {
+    this.update()
+  },
   computed: {
     ...mapState(['schedules', 'waitingRooms']),
+    room() {
+      return this.$route.params.room
+    },
     groupedSchedules() {
       return _(this.schedules)
         .filter((s) => s.priority > 0)
@@ -50,13 +56,33 @@ export default {
         .value()
     },
     classcodes() {
-      const { waitingRooms } = this
-      const room = this.$route.params.room
+      const { waitingRooms, room } = this
       const found = waitingRooms.find(({ id }) => id == room)
       return found ? found.classcodes : []
     }
   },
   methods: {
+    ...mapMutations(['clearAndPushIntervals']),
+    ...mapActions(['updateSchedules']),
+    update() {
+      const { clearAndPushIntervals, updateSchedules, classcodes } = this
+      const option = {
+        classcodes: classcodes.map((s) => s.classcode),
+        filter: {
+          is_complete: '=0'
+        }
+      }
+
+      clearAndPushIntervals(
+        _.throttle(
+          () => {
+            updateSchedules(option)
+          },
+          2000,
+          { leading: true, trailing: false }
+        )
+      )
+    },
     arrivedOnlySchedules() {
       return _(this.schedules)
         .filter(({ priority }) => {

@@ -44,7 +44,17 @@ const router = createRouter({
   ]
 })
 
+let isInitialLoad = true
+
 router.beforeEach((to, from, next) => {
+  if (isInitialLoad) {
+    isInitialLoad = false
+    if (to.path !== '/') {
+      next({ path: '/' })
+      return
+    }
+  }
+
   const jwt = store.state.jwt
   if (to.name === 'interview' && !jwt) {
     next({ name: 'home' })

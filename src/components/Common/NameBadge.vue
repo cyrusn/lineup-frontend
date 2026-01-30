@@ -5,7 +5,13 @@
     <font-awesome-icon :icon="['far', 'bell']" v-if="student.isNotified" />
   </span>
 
-  <button v-else type="button" :class="nameBadgeClass.button" class="btn">
+  <button
+    v-else
+    type="button"
+    :class="nameBadgeClass.button"
+    class="btn"
+    :disabled="isDisabled"
+  >
     {{ student.cname || student.ename.split(' ')[1] }} ({{ student.classno }})
     <font-awesome-icon :icon="['far', 'bell']" v-if="student.isNotified" />
   </button>
@@ -18,12 +24,17 @@ import { mapState } from 'vuex'
 export default {
   props: ['schedule', 'customClass', 'type'],
   computed: {
-    ...mapState(['students']),
+    ...mapState(['students', 'jwt']),
     student() {
       const { schedule, students } = this
       const { classcode, classno } = schedule
       const result = _.find(students, { classcode, classno })
       return Object.assign({}, schedule, result)
+    },
+    isDisabled() {
+      if (!this.jwt) return true
+      const { isNotified, priority } = this.schedule
+      return !!(isNotified && priority > 0)
     },
     nameBadgeClass() {
       const { schedule, customClass } = this

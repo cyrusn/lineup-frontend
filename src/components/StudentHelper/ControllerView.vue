@@ -3,13 +3,28 @@
     <div v-for="s in filteredStudents" :key="s.id" class="col-lg-4 col-6">
       <div class="btn-toolbar mb-2">
         <div class="btn-group me-1">
-          <button type="button" class="btn btn-outline-warning" @click="onAddSchedule(s)">
+          <button
+            type="button"
+            class="btn btn-outline-warning"
+            @click="onAddSchedule(s)"
+            :disabled="!jwt"
+          >
             <font-awesome-icon icon="user-plus" />
           </button>
-          <button type="button" class="btn btn-outline-secondary" @click="onRemoveSchedule(s)">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            @click="onRemoveSchedule(s)"
+            :disabled="!jwt"
+          >
             <font-awesome-icon icon="user-minus" />
           </button>
-          <button type="button" class="btn btn-outline-success" @click="onToggleIsNotified(s)">
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            @click="onToggleIsNotified(s)"
+            disabled
+          >
             <font-awesome-icon icon="bell" />
           </button>
         </div>
@@ -52,7 +67,7 @@ export default {
     NameBadge
   },
   computed: {
-    ...mapState(['schedules', 'students']),
+    ...mapState(['schedules', 'students', 'jwt']),
     filteredStudents() {
       const { classcode, students } = this
       return _.filter(students, { classcode })
