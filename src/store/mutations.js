@@ -33,15 +33,21 @@ export default {
     state.schedules = schedules
   },
   fakeAddSchedule(state, schedule) {
+    if (!state.jwt) return
     if (!_.find(state.schedules, schedule)) {
-      state.schedules.push(schedule)
+      state.schedules.push({
+        ...schedule,
+        arrivedAt: new Date().toISOString()
+      })
     }
   },
   fakeRemoveSchedule(state, schedule) {
+    if (!state.jwt) return
     const filtered = _.reject(state.schedules, schedule)
     state.schedules = [...filtered]
   },
   fakeAddPriority(state, schedule) {
+    if (!state.jwt) return
     state.schedules.map((s) => {
       if (_.isMatch(s, schedule)) {
         s.priority += 1
@@ -49,6 +55,7 @@ export default {
     })
   },
   fakeMinusPriority(state, schedule) {
+    if (!state.jwt) return
     state.schedules.map((s) => {
       if (_.isMatch(s, schedule)) {
         s.priority -= 1
@@ -56,6 +63,7 @@ export default {
     })
   },
   fakeIsNotified(state, schedule) {
+    if (!state.jwt) return
     state.schedules.map((s) => {
       if (_.isMatch(s, schedule)) {
         s.isNotified = !s.isNotified
@@ -63,6 +71,7 @@ export default {
     })
   },
   fakeIsComplete(state, schedule) {
+    if (!state.jwt) return
     state.schedules.map((s) => {
       if (_.isMatch(s, schedule)) {
         s.isComplete = !s.isComplete
@@ -70,6 +79,7 @@ export default {
     })
   },
   fakeIsMeeting(state, schedule) {
+    if (!state.jwt) return
     state.schedules.map((s) => {
       if (_.isMatch(s, schedule)) {
         s.isMeeting = !s.isMeeting

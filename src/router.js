@@ -1,19 +1,19 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import store from '@/store'
 
-import LoginPage from '@/views/LoginPage.vue'
 import NavbarMenu from '@/views/NavbarMenu.vue'
 import InterviewRoom from '@/views/InterviewRoom.vue'
 import WaitingRoom from '@/views/WaitingRoom.vue'
 import AttendancePage from '@/views/AttendancePage.vue'
 
-export default createRouter({
+const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
       path: '/',
-      name: 'login',
+      name: 'home',
       components: {
-        default: LoginPage,
+        default: WaitingRoom,
         Navbar: NavbarMenu
       }
     },
@@ -43,3 +43,14 @@ export default createRouter({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const jwt = store.state.jwt
+  if (to.name === 'interview' && !jwt) {
+    next({ name: 'home' })
+  } else {
+    next()
+  }
+})
+
+export default router

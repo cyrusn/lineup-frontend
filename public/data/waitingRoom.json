@@ -22,8 +22,8 @@
     ]
   },
   {
-    "id": "f2-4f-406",
-    "name": "中二級（四樓406室）",
+    "id": "f2-4f-phy",
+    "name": "中二級（四樓物理室）",
     "classcodes": [
       {
         "classcode": "2A",
@@ -66,28 +66,28 @@
     ]
   },
   {
-    "id": "f4-1f-music-room",
-    "name": "中四級（一樓音樂室）",
+    "id": "f4-1f-106",
+    "name": "中四級（一樓106室）",
     "classcodes": [
       {
         "classcode": "4A",
-        "location": "AD1"
-      },
-      {
-        "classcode": "4B",
-        "location": "AD2"
-      },
-      {
-        "classcode": "4C",
         "location": "101"
       },
       {
-        "classcode": "4D",
+        "classcode": "4B",
         "location": "102"
       },
       {
-        "classcode": "4E",
+        "classcode": "4C",
         "location": "103"
+      },
+      {
+        "classcode": "4D",
+        "location": "AD1"
+      },
+      {
+        "classcode": "4E",
+        "location": "AD2"
       }
     ]
   },
@@ -97,24 +97,24 @@
     "classcodes": [
       {
         "classcode": "5A",
-        "location": "310B"
-      },
-      {
-        "classcode": "5B",
         "location": "307"
       },
       {
-        "classcode": "5C",
+        "classcode": "5B",
         "location": "308"
+      },
+      {
+        "classcode": "5C",
+        "location": "305"
       },
 
       {
         "classcode": "5D",
-        "location": "305"
+        "location": "306"
       },
       {
         "classcode": "5E",
-        "location": "306"
+        "location": "310B"
       }
     ]
   }

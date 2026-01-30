@@ -29,3 +29,5 @@ coverage
 
 *.tsbuildinfo
 /public/data/student.json
+
+/public/data/students.json

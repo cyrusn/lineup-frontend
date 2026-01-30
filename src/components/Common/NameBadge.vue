@@ -1,12 +1,12 @@
 <template lang="html">
   <span v-if="type == 'badge'" :class="nameBadgeClass.badge" class="badge">
-    {{ student.cname || student.name.split(' ')[1] }} ({{ student.classcode
+    {{ student.cname || student.ename.split(' ')[1] }} ({{ student.classcode
     }}{{ String(student.classno).padStart(2, '0') }})
     <font-awesome-icon :icon="['far', 'bell']" v-if="student.isNotified" />
   </span>
 
   <button v-else type="button" :class="nameBadgeClass.button" class="btn">
-    {{ student.cname || student.name.split(' ')[1] }} ({{ student.classno }})
+    {{ student.cname || student.ename.split(' ')[1] }} ({{ student.classno }})
     <font-awesome-icon :icon="['far', 'bell']" v-if="student.isNotified" />
   </button>
 </template>

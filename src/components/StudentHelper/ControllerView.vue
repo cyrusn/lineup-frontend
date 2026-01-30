@@ -15,11 +15,16 @@
         </div>
         <div class="btn-group">
           <div v-if="getSchedule(s)">
-            <name-badge :schedule="getSchedule(s)" />
+            <div class="d-flex flex-column align-items-center">
+              <name-badge :schedule="getSchedule(s)" />
+              <small class="text-muted" v-if="getSchedule(s).arrivedAt">
+                {{ formatTime(getSchedule(s).arrivedAt) }}
+              </small>
+            </div>
           </div>
           <div v-else>
             <button class="btn btn-outline-secondary">
-              {{ s.cname || s.name.split(' ')[1] }} ({{ s.classno }})
+              {{ s.cname || s.ename.split(' ')[1] }} ({{ s.classno }})
             </button>
           </div>
         </div>
@@ -39,7 +44,9 @@ export default {
     const option = { leading: true, trailing: false }
     const vm = this
     const fnNames = ['onRemoveSchedule', 'onAddSchedule', 'onToggleIsNotified']
-    fnNames.map((fnName) => _.throttle(vm[fnName], 500, option))
+    fnNames.forEach((fnName) => {
+      vm[fnName] = _.throttle(vm[fnName], 500, option)
+    })
   },
   components: {
     NameBadge
@@ -87,6 +94,11 @@ export default {
         toggleIsNotified(s)
         fakeIsNotified({ classcode, classno })
       }
+    },
+    formatTime(isoString) {
+      if (!isoString) return ''
+      const date = new Date(isoString)
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   }
 }

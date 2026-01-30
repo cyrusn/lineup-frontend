@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-light navbar-expand-lg bg-light" v-if="jwt">
+  <nav class="navbar navbar-light navbar-expand-lg bg-light">
     <div class="container-fluid">
       <a class="navbar-brand me-5" href="#">家長接見系統</a>
 
@@ -51,7 +51,24 @@
             </div>
           </div>
         </form>
-        <span class="navbar-text">聖公會李炳中學</span>
+
+        <form class="d-flex ms-auto" v-if="!jwt" @submit.prevent="onLogin">
+          <div class="row row-cols-lg-auto g-3 align-items-center">
+            <div class="col-12">
+              <input type="text" class="form-control" placeholder="登入名稱" v-model="userAlias" />
+            </div>
+            <div class="col-12">
+              <input type="password" class="form-control" placeholder="密碼" v-model="password" />
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">登入</button>
+            </div>
+          </div>
+        </form>
+        <div class="navbar-text ms-auto" v-else>
+          <span class="badge bg-secondary me-2" v-if="role">{{ role }}</span>
+          <span>聖公會李炳中學</span>
+        </div>
       </div>
     </div>
   </nav>
@@ -64,21 +81,35 @@ import _ from 'lodash'
 export default {
   data() {
     return {
-      task: '',
+      task: 'waiting-room',
       classcode: '',
-      room: ''
+      room: '',
+      userAlias: '',
+      password: ''
     }
   },
   created() {
     const { fetchStudents, fetchWaitingRooms } = this
-    if (!this.jwt) {
-      this.$router.push('/')
-    }
     fetchStudents()
     fetchWaitingRooms()
   },
+  watch: {
+    jwt() {
+      if (!this.jwt) {
+        this.updateRole('')
+        return
+      }
+      try {
+        const { getRoleInJWT, updateRole } = this
+        const role = getRoleInJWT()
+        updateRole(role)
+      } catch (e) {
+        console.error('Invalid JWT', e)
+      }
+    }
+  },
   computed: {
-    ...mapState(['students', 'waitingRooms']),
+    ...mapState(['students', 'waitingRooms', 'jwt', 'role']),
     show() {
       const { task, room } = this
       if (!task) {
@@ -90,42 +121,70 @@ export default {
       return false
     },
     tasks() {
-      const { role } = this
-      return _.filter(
-        [
-          {
-            id: 'attendance',
-            name: '點名'
-          },
-          {
-            id: 'waiting-room',
-            name: '等候室'
-          },
-          {
-            id: 'interview',
-            name: '接見'
-          }
-        ],
-        (task) => {
-          if (role === 'teacher') return true
-          if (task.id !== 'interview') return true
+      const { role, jwt } = this
+      const allTasks = [
+        {
+          id: 'attendance',
+          name: '點名'
+        },
+        {
+          id: 'waiting-room',
+          name: '等候室'
+        },
+        {
+          id: 'interview',
+          name: '接見'
         }
-      )
+      ]
+
+      if (!jwt) {
+        return _.filter(allTasks, (t) => t.id !== 'interview')
+      }
+
+      if (role == 'teacher') {
+        return allTasks
+      }
+
+      return _.filter(allTasks, (t) => t.id !== 'interview')
     },
     classcodes() {
       const { waitingRooms, room } = this
       console.log(room)
       const found = waitingRooms.find(({ id }) => id == room)
       return found ? found.classcodes : []
-    },
-    ...mapState(['jwt', 'role'])
+    }
   },
   methods: {
-    ...mapMutations(['clearAndPushIntervals']),
-    ...mapActions(['updateSchedules', 'fetchStudents', 'fetchWaitingRooms']),
+    ...mapMutations(['clearAndPushIntervals', 'updateRole']),
+    ...mapActions(['updateSchedules', 'fetchStudents', 'fetchWaitingRooms', 'login']),
+    onLogin() {
+      const { userAlias, password, login } = this
+      login({
+        payload: {
+          userAlias,
+          password
+        },
+        callback: () => {
+          // Stay on current page or go to default?
+          // If we are on waiting room, maybe stay?
+          // But user might want to go to their task.
+          // For now, let's just clear the form or something.
+          // The store updates JWT, and 'tasks' computed property will update.
+          this.userAlias = ''
+          this.password = ''
+        }
+      })
+    },
+    getRoleInJWT() {
+      return JSON.parse(atob(this.jwt.split('.')[1])).Role
+    },
     onChange() {
-      const { task, classcode, room, go } = this
+      const { task, classcode, room, go, jwt } = this
       if (!task) return
+      if (!jwt && task === 'interview') {
+        this.task = 'waiting-room'
+        return
+      }
       if (task === 'waiting-room' && room) return go()
       if (task !== 'waiting-room' && classcode) return go()
     },
