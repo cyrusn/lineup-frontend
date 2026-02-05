@@ -17,6 +17,7 @@ import {
   faBellSlash,
   faCommentDots,
   faCheckCircle,
+  faHeart,
   faSun,
   faMoon
 } from '@fortawesome/free-solid-svg-icons'
@@ -33,6 +34,7 @@ library.add(
   faBellSlash,
   faCommentDots,
   faCheckCircle,
+  faHeart,
   faSun,
   faMoon
 )

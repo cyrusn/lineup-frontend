@@ -23,7 +23,7 @@
             type="button"
             class="btn btn-outline-success"
             @click="onToggleIsNotified(s)"
-            disabled
+            :disabled="!jwt"
           >
             <font-awesome-icon icon="bell" />
           </button>
@@ -39,6 +39,9 @@
           </div>
           <div v-else>
             <button class="btn btn-outline-secondary">
+              <span v-if="s.noOfGroup > 0">
+                <font-awesome-icon icon="heart" />
+              </span>
               {{ s.cname || s.ename.split(' ')[1] }} ({{ s.classno }})
             </button>
           </div>
